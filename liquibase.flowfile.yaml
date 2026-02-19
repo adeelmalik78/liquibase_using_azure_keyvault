@@ -1,0 +1,38 @@
+stages:
+
+  # Snapshot:
+  #   actions:
+  #     - type: liquibase
+  #       #globalArgs: { defaultsFile: "liquibase.properties" }
+  #       command: snapshot
+  #       cmdArgs: {verbose: true, changelog-file: "changelog.xml", snapshot-format: "json"}
+  #       globalArgs: { outputfile: "SNAPSHOT_PP_DEV.json" } 
+
+  Status:
+    actions:
+    - type: liquibase
+      command: status
+
+  # Execute-SQL:
+  #   actions:
+  #   - type: liquibase
+  #     if: "${LBCOMMAND} == execute-sql"
+  #     command: checks run
+  #     cmdArgs: {  checks-settings-file: "liquibase.checks-execute-sql.conf",
+  #                 changelog-file: "changelog-execute-sql.xml"}
+
+  #   - type: liquibase
+  #     if: "${LBCOMMAND} == execute-sql"
+  #     command: execute-sql
+  #     cmdArgs: { sql-file: "main/show/showalldeployments.sql"}
+
+  Update:
+    actions:
+    - type: liquibase
+      # if: "${LBCOMMAND} == update"
+      command: update
+
+endStage:
+  actions:
+  - type: liquibase
+    command: history
