@@ -17,17 +17,17 @@ NC='\033[0m' # No Color
 
 # Function to print error messages
 error() {
-    echo -e "${RED}ERROR: $1${NC}" >&2
+    echo "${RED}ERROR: $1${NC}" >&2
 }
 
 # Function to print success messages
 success() {
-    echo -e "${GREEN}SUCCESS: $1${NC}"
+    echo "${GREEN}SUCCESS: $1${NC}"
 }
 
 # Function to print info messages
 info() {
-    echo -e "${YELLOW}INFO: $1${NC}"
+    echo "${YELLOW}INFO: $1${NC}"
 }
 
 # Validate input parameters

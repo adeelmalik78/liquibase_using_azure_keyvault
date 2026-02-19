@@ -17,17 +17,17 @@ NC='\033[0m' # No Color
 
 # Function to print error messages
 error() {
-    echo -e "${RED}ERROR: $1${NC}" >&2
+    echo "${RED}ERROR: $1${NC}" >&2
 }
 
 # Function to print success messages
 success() {
-    echo -e "${GREEN}SUCCESS: $1${NC}"
+    echo "${GREEN}SUCCESS: $1${NC}"
 }
 
 # Function to print info messages
 info() {
-    echo -e "${YELLOW}INFO: $1${NC}"
+    echo "${YELLOW}INFO: $1${NC}"
 }
 
 # Validate input parameters
@@ -142,10 +142,10 @@ export LIQUIBASE_COMMAND_CHANGELOG_FILE=${CHANGELOG_FILE}
 info "Logging out from Azure..."
 az logout --output none 2>/dev/null || true
 
-info "Running Liquibase Flow ..."
+# info "Running Liquibase Flow ..."
 
-if liquibase flow; then
-    success "Liquibase Flow completed successfully"
-fi
+# # if liquibase flow; then
+# #     success "Liquibase Flow completed successfully"
+# # fi
 
 # exit 0
