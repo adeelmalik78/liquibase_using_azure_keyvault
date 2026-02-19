@@ -7,7 +7,7 @@
 # 
 # If you are using a Managed Identity, the client ID can be found under the identity's properties or retrieved via the Azure IMDS endpoint. 
 
-export AZURE_CLIENT_ID="<YOUR AZURE CLIENT ID>"
+export AZURE_CLIENT_ID="<YOUR AZURE_CLIENT_ID>"
 
 # You can find or reset it in the Azure Portal under 
 # Microsoft Entra ID > Manage > App Registrations > [Your App Name] > Certificates & secrets. 
@@ -18,8 +18,5 @@ export AZURE_CLIENT_SECRET="<YOUR AZURE_CLIENT_SECRET>"
 export AZURE_TENANT_ID="<YOUR AZURE_TENANT_ID>"
 
 
-export AZURE_KEYVAULT_NAME="<YOUR AZURE_KEYVAULT_NAME"
-
-
-source scripts/fetch-liquibase-secrets.sh <AZURE_KEYVAULT_NAME> <ENVIRONMENT>
+source scripts/fetch-secrets.sh LiquibaseSCT test
 

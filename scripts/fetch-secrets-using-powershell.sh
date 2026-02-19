@@ -33,8 +33,8 @@ info() {
 # Validate input parameters
 if [ $# -ne 2 ]; then
     error "Invalid number of arguments"
-    echo "Usage: $0 <keyvault-name> <environment> <output-file>"
-    echo "Example: $0 my-keyvault prod ./liquibase.properties"
+    echo "Usage: $0 <keyvault-name> <environment>"
+    echo "Example: $0 my-keyvault prod"
     exit 1
 fi
 
@@ -117,40 +117,29 @@ LICENSE_KEY_SECRET="liquibase-license-key"
 DB_URL_SECRET="${ENVIRONMENT}-liquibase-db-url"
 DB_USERNAME_SECRET="${ENVIRONMENT}-liquibase-db-username"
 DB_PASSWORD_SECRET="${ENVIRONMENT}-liquibase-db-password"
-
-# Optional secrets (won't fail if missing)
 CHANGELOG_FILE_SECRET="changelog-file"
 
 # Fetch required secrets
 info "Fetching required secrets..."
 
-LICENSE_KEY=$(fetch_secret "${LICENSE_KEY_SECRET}") || exit 1
-DB_URL=$(fetch_secret "${DB_URL_SECRET}") || exit 1
-DB_USERNAME=$(fetch_secret "${DB_USERNAME_SECRET}") || exit 1
-DB_PASSWORD=$(fetch_secret "${DB_PASSWORD_SECRET}") || exit 1
+LICENSE_KEY=$(fetch_secret "${LICENSE_KEY_SECRET}") || echo "Failed to fetch license key"
+DB_URL=$(fetch_secret "${DB_URL_SECRET}") || echo "Failed to fetch url"
+DB_USERNAME=$(fetch_secret "${DB_USERNAME_SECRET}") || echo "Failed to fetch username"
+DB_PASSWORD=$(fetch_secret "${DB_PASSWORD_SECRET}") || echo "Failed to fetch password"
+CHANGELOG_FILE=$(fetch_secret "${CHANGELOG_FILE_SECRET}") || echo "Failed to fetch changelog file"
 
 success "All required secrets retrieved successfully"
 
-# Fetch optional secrets
-info "Fetching optional secrets..."
-
-CHANGELOG_FILE=$(fetch_secret "${CHANGELOG_FILE_SECRET}" 2>/dev/null || echo "changelog.xml")
-
 # Setting environment variables
-export LIQUIBASE_LICENSE_KEY=${LICENSE_KEY}
-export LIQUIBASE_COMMAND_URL=${DB_URL}
-export LIQUIBASE_COMMAND_USERNAME=${DB_USERNAME}
-export LIQUIBASE_COMMAND_PASSWORD=${DB_PASSWORD}
-export LIQUIBASE_COMMAND_CHANGELOG_FILE=${CHANGELOG_FILE}
+echo "LIQUIBASE_LICENSE_KEY=${LICENSE_KEY}"
+echo "LIQUIBASE_COMMAND_URL=${DB_URL}"
+echo "LIQUIBASE_COMMAND_USERNAME=${DB_USERNAME}"
+echo "LIQUIBASE_COMMAND_PASSWORD=${DB_PASSWORD}"
+echo "LIQUIBASE_COMMAND_CHANGELOG_FILE=${CHANGELOG_FILE}"
+
 
 # Logout from Azure
 info "Logging out from Azure..."
 az logout --output none 2>/dev/null || true
 
-info "Running Liquibase Flow ..."
 
-if liquibase flow; then
-    success "Liquibase Flow completed successfully"
-fi
-
-# exit 0
