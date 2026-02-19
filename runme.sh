@@ -17,5 +17,5 @@ export AZURE_CLIENT_SECRET="<YOUR AZURE_CLIENT_SECRET>"
 # found in the Microsoft Entra ID portal under Properties as "Directory ID"
 export AZURE_TENANT_ID="<YOUR AZURE_TENANT_ID>"
 
-source scripts/fetch-liquibase-secrets.sh LiquibaseSCT test
+source scripts/fetch-secrets.sh LiquibaseSCT test
 
